@@ -14,6 +14,8 @@ class TraceSelection(bpy.types.Operator):
         
                 
         bpy.ops.gpencil.convert(type='CURVE', use_timing_data=True)
+        bpy.ops.gpencil.data_unlink()
+
         bpy.ops.object.select_by_type(type = 'CURVE')
         bpy.context.scene.objects.active = bpy.data.objects["GP_Layer"]
         
