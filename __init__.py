@@ -9,27 +9,28 @@ class TraceSelection(bpy.types.Operator):
     bl_options = { 'REGISTER', 'UNDO' }
     
     def execute(self, context):
-        
+
         scene = context.scene
-        
-                
+
+
         bpy.ops.gpencil.convert(type='CURVE', use_timing_data=True)
         bpy.ops.gpencil.data_unlink()
-
+        bpy.ops.paint.texture_paint_toggle()
+        
         bpy.ops.object.select_by_type(type = 'CURVE')
         bpy.context.scene.objects.active = bpy.data.objects["GP_Layer"]
-        
+
         bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
-        
+
         bpy.ops.object.editmode_toggle()
         bpy.ops.curve.cyclic_toggle()
         bpy.context.object.data.dimensions = '2D'
-        
+
         bpy.ops.object.editmode_toggle()
         bpy.ops.object.convert(target='MESH')
         bpy.ops.object.editmode_toggle()
         bpy.ops.mesh.select_all(action='TOGGLE')
-        
+
         bpy.ops.mesh.dissolve_faces()
 
         bpy.ops.uv.project_from_view(camera_bounds=True, correct_aspect=False, scale_to_bounds=False)
@@ -41,7 +42,7 @@ class TraceSelection(bpy.types.Operator):
         bpy.context.scene.tool_settings.image_paint.seam_bleed = 0
 
 
-        
+
         return {'FINISHED'}
     
     
